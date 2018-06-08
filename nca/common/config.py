@@ -91,7 +91,7 @@ def init(args, **kwargs):
 
 def setup_logging():
     """Sets up the logging options for a log with supplied name."""
-    product_name = "neutron"
+    product_name = "nca"
     # We use the oslo.log default log levels and add only the extra levels
     # that Neutron needs.
     logging.set_defaults(default_log_levels=logging.get_default_log_levels() +

@@ -1,3 +1,4 @@
+# Copyright (c) 2015 Taturiello Consulting, Meh.
 # All Rights Reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -12,25 +13,18 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import oslo_i18n
+from neutron.pecan_wsgi.controllers import resource
+from neutron.pecan_wsgi.controllers import utils as controller_utils
 
-DOMAIN = "nca"
 
-_translators = oslo_i18n.TranslatorFactory(domain=DOMAIN)
+def get_controller(state):
+    if (state.arguments and state.arguments.args and
+            isinstance(state.arguments.args[0],
+                       controller_utils.NeutronPecanController)):
+        controller = state.arguments.args[0]
+        return controller
 
-# The primary translation function using the well-known name "_"
-_ = _translators.primary
 
-# The contextual translation function using the name "_C"
-_C = _translators.contextual_form
-
-# The plural translation function using the name "_P"
-_P = _translators.plural_form
-
-_LI = _translators.log_info
-_LW = _translators.log_warning
-_LE = _translators.log_error
-_LC = _translators.log_critical
-
-def get_available_languages():
-    return oslo_i18n.get_available_languages(DOMAIN)
+def is_member_action(controller):
+    return isinstance(controller,
+                      resource.MemberActionController)
